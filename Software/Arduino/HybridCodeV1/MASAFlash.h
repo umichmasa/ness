@@ -1,33 +1,9 @@
 /*
-  SST25VF016B.h
-  FLASHVF016 Library for Arduino 
-  
-  This library is free software; you can redistribute it and/or
-  modify it under the terms of the GNU Lesser General Public
-  License as published by the Free Software Foundation; either
-  version 2.1 of the License, or (at your option) any later version.
-
-  This library is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  Lesser General Public License for more details.
-
-  You should have received a copy of the GNU Lesser General Public
-  License along with this library; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  US
-
-  This library is based on several projects:
- 
-  The Arduino EEPROM library found here:  
-  http://arduino.cc/en/Reference/EEPROM
-
- 
-*/
-
-/*
  * MASAFlash.h
  * Class for interfacing with SPI Flash chip
- * Modified from above project to work with Arduino Zero SPI Implementation
+ * To be used with MASALogging
+ * Hardware Interfacing
+ * Look up datasheet for SST25VF016B-75-4I-S2AF
  */
  
 
@@ -38,7 +14,7 @@
 #include <Arduino.h>
 #include <SPI.h>
 
-// Flash module commands:
+// Chip register constants:
 const byte BYTE_WRITE =       0x02;  // Command to program a byte
 const byte READ_SLOW =        0x03;  // Read command
 const byte READ_FAST =        0x0B;  // Read command  
@@ -58,6 +34,7 @@ const byte STATREG_WRITE =    0x01;  // Command to write status registry
 // Clock divider
 const byte CLOCK_DIVIDER =  2;     // Clock divider (84MHz/CLOCK_DIVIDER=21Mhz operations clock)
 
+//Memory area constants
 #define  SECTOR_4KB    0
 #define  SECTOR_32KB   1
 #define  SECTOR_64KB   2
@@ -70,27 +47,50 @@ const byte CLOCK_DIVIDER =  2;     // Clock divider (84MHz/CLOCK_DIVIDER=21Mhz o
 class MASAFlash
 {
   public:
+    //Constructor
     MASAFlash();
+
+    //Initialization
     void init(byte slaveSelectPin);
+    
+    //Wipe entire chip
     void eraseChip();
+
+    //Wipe specified sector of chip
     void eraseSector(long sectorAddress, byte sectorSize = SECTOR_4KB);
+    
+    //Ask chip if it is done with read/write operations
     boolean isReady();
+
+    //Read byte from address
     byte readByte(long address);
+
+    //Read multiple bytes from address (in chain)
     byte readByteMulti(long address, byte action = READ_BEGIN);
+
+    //Write byte to address
     void writeByte(byte b, long address);
-    void readID(byte *id);        
+
+    //Read chip ID (not terribly useful)
+    void readID(byte *id);
+
+    //Read from the configuration registers
     byte readStatusRegistry();
+
+    //Write to the configuration registers (see datasheet)
     void writeStatusRegistry(byte registry);
-        
+
+    //Enable writing to chip
     void write_enable();
+
+    //Disable writing to chip
     void write_disable();
-  private:    
+  private:
+
+      //Enable writing to status registers
     byte statreg_write_enable();    
     
   private:
     byte CE;  // Chip enable (SPI Chip Select) pin 
 };
-
-//extern Flash flash;
-
 #endif

@@ -26,30 +26,41 @@ class MASAConfig
     MASAConfig();
     MASAEEPROM eeprom;
 
-	
+	//Byte read from general configuation memory
 	uint8_t readGeneralConfigurationByte(uint16_t configByteNumber);
-	
+
+  //Byte read from servo configuation memory
 	uint8_t readServoConfigurationByte(uint16_t servoByteNumber);
-	
+
+  //Byte read from state configuation memory
 	uint8_t readStateConfigurationByte(uint16_t servoByteNumber);
-	
+
+  //Byte read from logging configuation memory
 	uint8_t readLoggingConfigurationByte(uint16_t servoByteNumber);
-	
+
+  //Byte write to general configuation memory
 	void writeGeneralConfigurationByte(uint16_t configByteNumber, uint8_t byte);
-	
+
+  //Byte write to servo configuation memory
 	void writeServoConfigurationByte(uint16_t servoByteNumber, uint8_t byte);
-	
+
+  //Byte write to state configuation memory
 	void writeStateConfigurationByte(uint16_t servoByteNumber, uint8_t byte);
-	
+
+  //Byte write to logging configuation memory
 	void writeLoggingConfigurationByte(uint16_t servoByteNumber, uint8_t byte);
-	
+
+  //Initialize configuration
 	void init();
 
+  //Read area constants
   static const uint8_t GENERAL_CONFIG = 0x00;
   static const uint8_t SERVO_CONFIG = 0x01;
   
   private:
-  
+
+  //Address location constants
+  //This is arbitrary memory mapping, not a hardware property
   const static uint16_t generalConfigAddressStart = 0;
   const static uint16_t generalConfigAddressEnd = 999;
   const static uint16_t generalConfigBytesUsed = 10;
@@ -65,9 +76,6 @@ class MASAConfig
   const static uint16_t dataLoggingConfigAddressStart = 3000;
   const static uint16_t dataLoggingConfigAddressEnd = 3999;
   const static uint16_t dataLoggingBytesUsed = 50;
-  
-
-  
   
 
   

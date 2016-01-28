@@ -1,6 +1,10 @@
 /*
  * MASASerial.cpp
  * Packet wrapper for Serial class
+ * Groups messages together in standard format
+ * Allows for simplified communication with MATLAB with
+ * a non-ASCII interface
+ * Communicates with MATLAB version of this program
  */
  
 

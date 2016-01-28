@@ -26,14 +26,25 @@
 class MASAWatchdog{
 
   public:
+  //Constructor
   MASAWatchdog();
 
+  //Initialize (set registers)
   void init();
+
+  //Enable (turn checking register on)
   void enable();
+
+  //Disable (turn checking register off)
   void disable();
+
+  //Must be called periodically to clear timer
   void clear();
+
+  //Borrowed from internet, sets up clock
   void initializeWDTClock();
 
+  //Software
   void reset();
   
 };
