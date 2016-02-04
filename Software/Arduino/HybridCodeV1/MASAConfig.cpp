@@ -8,6 +8,7 @@
 
 MASAConfig::MASAConfig(){}
 
+//Initialization
 void MASAConfig::init(){
   eeprom.init();
 }

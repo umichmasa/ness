@@ -6,7 +6,7 @@
 #include "MASAServo.h"
 #include <Servo.h>
 
-
+//Constructor
 MASAServo::MASAServo(){
 	
 	controlAvailable = 0;
@@ -29,7 +29,7 @@ MASAServo::MASAServo(){
 	mode = NORMAL;
 }
 
-
+//Attach servo pin
 void MASAServo::attach(uint8_t c){
 	servo.attach(c);
 	controlAvailable = 1;

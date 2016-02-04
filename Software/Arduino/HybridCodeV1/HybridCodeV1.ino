@@ -11,7 +11,7 @@
  * -Begin Datalogging
  * -Investigate FreeRTOS implementation for future task scheduling
  * -Improve usage of timimg from solenoids/servo
- * -Figure out why timing for MASAServo is wrong?
+ * -Figure out why timing for MASAServo is strange?
  * -Define actual open procedure for servo
  * -Define beter interval for polling ADC
  */
@@ -21,6 +21,7 @@
 #include <SPI.h>
 #include <Wire.h>
 
+//SAMD21/Arduino Zero Libraries
 #include <RTCZero.h>
 
 #include "sam.h"

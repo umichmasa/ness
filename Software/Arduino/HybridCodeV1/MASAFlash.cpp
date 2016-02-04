@@ -11,6 +11,7 @@ MASAFlash::MASAFlash(void)
   
 }
 
+//Initialize SPI Connection
 void MASAFlash::init(byte slaveSelectPin)
 {
   CE = slaveSelectPin;
@@ -21,7 +22,8 @@ void MASAFlash::init(byte slaveSelectPin)
   SPI.setBitOrder(MSBFIRST);
   //SPI.setClockDivider(CLOCK_DIVIDER);  
 }
-    
+
+//Return byte at address
 byte MASAFlash::readByte(long address)
 {
   byte read_byte = 0x00;
@@ -43,6 +45,7 @@ byte MASAFlash::readByte(long address)
   return read_byte;
 }
 
+//Read multiple bytes starting at address
 byte MASAFlash::readByteMulti(long address, byte action)
 {
   byte read_byte = 0x00;
@@ -76,6 +79,7 @@ byte MASAFlash::readByteMulti(long address, byte action)
   return read_byte;  
 }
 
+//Write byte b to address
 void MASAFlash::writeByte(byte b, long address)
 {
   byte address_b[4];
@@ -96,7 +100,7 @@ void MASAFlash::writeByte(byte b, long address)
   digitalWrite(CE,HIGH);
 }
 
-
+//Read status bitfield from chip
 byte MASAFlash::readStatusRegistry()
 {
   byte statreg;
@@ -107,6 +111,7 @@ byte MASAFlash::readStatusRegistry()
   return statreg;
 }
 
+//Write status bitfield to chip
 void MASAFlash::writeStatusRegistry(byte registry)
 {
   digitalWrite(CE,LOW);
@@ -119,12 +124,13 @@ void MASAFlash::writeStatusRegistry(byte registry)
   digitalWrite(CE,HIGH);
 }
 
+//Enable writing to status register
 byte MASAFlash::statreg_write_enable()
 {
   SPI.transfer(STATREG_WR_EN);
 }    
 
-    
+//Wipe entire chip
 void MASAFlash::eraseChip(void)
 {
   digitalWrite(CE,LOW);
@@ -136,12 +142,14 @@ void MASAFlash::eraseChip(void)
   digitalWrite(CE,HIGH);
 }
 
+//Is the chip ready to do things?
 boolean MASAFlash::isReady(void)
 {
   byte statreg = readStatusRegistry();
   return bitRead(statreg,0);
 }
 
+//Erase a specific sector
 void MASAFlash::eraseSector(long sectorAddress, byte sectorSize)
 {
   byte address_b[4];
@@ -171,7 +179,7 @@ void MASAFlash::eraseSector(long sectorAddress, byte sectorSize)
   digitalWrite(CE,HIGH);
 }
 
-
+//Read ID of chip
 void MASAFlash::readID(byte *id)
 {
   digitalWrite(CE,LOW);
@@ -182,12 +190,15 @@ void MASAFlash::readID(byte *id)
   digitalWrite(CE,HIGH);
 }
 
+//Enable writing data to chip
 void MASAFlash::write_enable()
 {
   
   SPI.transfer(WRITE_ENABLE);  
 }
 
+
+//Disable writing to chip
 void MASAFlash::write_disable()
 {
   SPI.transfer(WRITE_DISABLE); 

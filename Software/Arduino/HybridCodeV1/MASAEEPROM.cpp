@@ -5,12 +5,15 @@
  
 #include "MASAEEPROM.h"
 
+//Constructor
 MASAEEPROM::MASAEEPROM(){}
 
+//Initialization
 void MASAEEPROM::init(){
   Wire.begin();
 }
 
+//Writes byte b to memory location address
 void MASAEEPROM::writeByte(uint16_t address, uint8_t b){
   uint8_t address_upper = address>>8;
   uint8_t address_lower = address;
@@ -22,6 +25,7 @@ void MASAEEPROM::writeByte(uint16_t address, uint8_t b){
   Wire.endTransmission(true);
 }
 
+//Returns byte at memory location address
 uint8_t MASAEEPROM::readByte(uint16_t address){
   uint8_t address_upper = address>>8;
   uint8_t address_lower = address;
